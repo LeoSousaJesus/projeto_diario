@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Configuração do Banco de Dados
 user = 'root'
-password = urllib.parse.quote_plus('1234')
+password = urllib.parse.quote_plus('senai@123')
 host = 'localhost'
 database = 'schooltracker'
 connection_string = f'mysql+pymysql://{user}:{password}@{host}/{database}'
@@ -115,6 +115,25 @@ def editar_aluno(id):
         return redirect(url_for('listar_alunos', mensagem=mensagem))
 
     return render_template('editar_aluno.html', aluno=aluno)
+
+@app.route('/menu')
+def ver_menu():
+    return render_template('menu.html')
+
+@app.route("/pesquisara", methods=['POST'])
+def pesquisa_ra():
+    pesquisa = request.form['pesquisa_ra']
+    return f"rota pesquisa funcionou! {pesquisa}"
+
+@app.route('/formulario', methods=['GET', 'POST'])
+def formulario():
+    if request.method == 'POST':
+        datahora = request.form['datahora']
+        texto = request.form['texto']
+        # Aqui você pode processar os dados conforme necessário
+        print(f'Data e Hora: {datahora}, Texto: {texto}')
+        return 'Dados enviados com sucesso!'
+    return render_template('formulario.html')
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
